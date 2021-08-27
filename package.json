@@ -4,12 +4,13 @@
   "description": "node-skeleton",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon --trace-warnings ./src/app.js",
-    "debug": "node --inspect-brk --trace-warnings ./src/app.js",
-    "start-prod": "node ./src/app.js",
+    "start": "nodemon ./src/app.ts",
+    "debug": "npm run build &&  node --inspect build/app.js",
+    "start-prod": "npm run build && node build/app.js",
+    "build": "tsc",
     "doc": "apidoc -i src -o docs/api && apidoc-markdown -p docs/api -o docs/api.md",
-    "lint": "standard",
-    "lint-fix": "standard --fix"
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix"
   },
   "repository": {
     "type": "git",
@@ -27,11 +28,12 @@
     ]
   },
   "_moduleAliases": {
-    "@constants": "./src/constants",
-    "@models": "./src/models",
-    "@routes": "./src/routes",
-    "@utils": "./src/utils",
-    "@services": "./src/services"
+    "@constants": "build/constants",
+    "@models": "build/models",
+    "@routes": "build/routes",
+    "@utils": "build/utils",
+    "@services": "build/services",
+    "@controllers": "build/controllers"
   },
   "license": "MIT",
   "dependencies": {
@@ -54,12 +56,28 @@
     "morgan": "^1.9.1",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
+    "typescript": "^4.4.2",
     "validator": "^10.10.0"
   },
   "devDependencies": {
     "@rigwild/apidoc-markdown": "^2.0.2",
+    "@types/config": "0.0.39",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/express-jwt": "^6.0.2",
+    "@types/module-alias": "^2.0.1",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^16.7.2",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
     "apidoc": "^0.17.7",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-config-standard-with-typescript": "^20.0.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
     "nodemon": "^1.18.11",
-    "standard": "^12.0.1"
+    "standard": "^12.0.1",
+    "ts-node": "^10.2.1"
   }
 }
