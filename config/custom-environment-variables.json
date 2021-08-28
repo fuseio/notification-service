@@ -21,5 +21,8 @@
     "accounts": {
       "seed": "COMMUNITY_SECRETS_ACCOUNTS_SEED"
     }
+  },
+  "slack": {
+    "url": "SLACK_WEBHOOK_URL"
   }
 }

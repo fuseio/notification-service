@@ -1,9 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict'
+Object.defineProperty(exports, '__esModule', { value: true })
 class RequestError extends Error {
-    constructor(status, message) {
-        super(message);
-        this.status = status;
-    }
+  constructor (status, message) {
+    super(message)
+    this.status = status
+  }
 }
-exports.default = RequestError;
+exports.default = RequestError

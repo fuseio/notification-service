@@ -6,6 +6,8 @@ import morgan from 'morgan'
 import util from 'util'
 import config from 'config'
 import RequestError from '@models/RequestError'
+import cors from 'cors'
+import routes from './routes'
 
 async function init () {
   console.log(util.inspect(config, { depth: null }))
@@ -15,8 +17,8 @@ async function init () {
   const app = express()
 
   if (config.get('api.allowCors')) {
-    const cors = require('cors')
-    app.use(cors())
+    const corsHandler = cors()
+    app.use(corsHandler)
   }
 
   app.use(morgan('common'))
@@ -26,7 +28,7 @@ async function init () {
 
   require('./models')
 
-  app.use(require('./routes'))
+  app.use(routes)
 
   // catch 404 and forward to error handler
   app.use(function (req: Request, res: Response, next: NextFunction) {
@@ -36,6 +38,7 @@ async function init () {
 
   /// error handlers
   if (!isProduction) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     app.use(function (err: RequestError, req: Request, res: Response, next: NextFunction) {
       console.log(err.stack)
 
@@ -49,6 +52,7 @@ async function init () {
       })
     })
   } else {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     app.use(function (err: RequestError, req: Request, res: Response, next: NextFunction) {
       res.status(err.status || 500)
       res.json({
@@ -61,7 +65,7 @@ async function init () {
   }
 
   // finally, let's start our server...
-  var server = app.listen(config.get('api.port') || 8080, function () {
+  const server = app.listen(config.get('api.port') || 8080, function () {
     const address: any = server?.address()
     console.log('Listening on port ' + address.port)
   })
